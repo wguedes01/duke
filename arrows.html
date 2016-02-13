@@ -76,6 +76,19 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.15/d3.js" type="text/javascript"><
         .attr('width', width)
         .attr('height', height);
 
+        svg.append("svg:defs").selectAll("marker")
+            .data(["end"])      // Different link/path types can be defined here
+          .enter().append("svg:marker")    // This section adds in the arrows
+            .attr("id", String)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 15)
+            .attr("refY", -1.5)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+          .append("svg:path")
+            .attr("d", "M0,-5L10,0L0,5");
+
       force.nodes(data.nodes)
         .links(data.links)
         .start();
@@ -85,6 +98,7 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.15/d3.js" type="text/javascript"><
         .enter()
         .append('line')
         .attr('class', 'link')
+        .attr("marker-end", "url(#end)")
         .style('stroke-width', 2);
 
         //Do the same with the circles for the nodes - no
@@ -147,7 +161,7 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.15/d3.js" type="text/javascript"><
             d3.selectAll('.node')
               .style('opacity', '1')
               .style('fill', 'black');
-              
+
               return;
           }
 
